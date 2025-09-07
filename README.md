@@ -82,11 +82,11 @@ This structure is used when the project was getting worked on.
 ```text
 project/
 |
-|--- CLASSIFICATION_MODEL/
+|--- CLASSIFICATION/
 |     |--- processing.py
 |
 |--- PREPROCESSING/
-|     |--- detection_models.py
+|     |--- detection.py
 |     |--- feature_extraction.py
 |
 |--- screenshots/
