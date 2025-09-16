@@ -47,11 +47,11 @@ def classify(image_path:str, model_path:str, detection_method:object):
         label = clf.predict([features])[0]
 
         if label == 1:
-            cv.rectangle(original, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            cv.putText(original, 'handwritten', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+            cv.rectangle(original, (x, y), (x+w, y+h), (0, 255, 0), 1)
+            # cv.putText(original, 'handwritten', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
         else:
-            cv.rectangle(original, (x, y), (x+w, y+h), (0, 0, 255), 2)
-            cv.putText(original, 'printed', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            cv.rectangle(original, (x, y), (x+w, y+h), (0, 0, 255), 1)
+            # cv.putText(original, 'printed', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 
     return original
