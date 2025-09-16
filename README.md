@@ -41,6 +41,8 @@ ATTENTION: please turn on your internet connection during usage!
   pip install -r requirements.txt
 ```
 
+NOTE: The first requirement is depended on availability of GPU and the same CUDA version. If you are using cpu or any other CUDA version, please check the link(provided in the command of installing first requirement) to find a compatible version with your own system.
+
 ## **Usage Guide**
 Run application with GUI(web app):
 ```bash
