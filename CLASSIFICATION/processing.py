@@ -23,11 +23,11 @@ def classify(image_path:str, model_path:str, detection_method:object):
     original = image.copy()
     clf = joblib.load(model_path)
 
-    contours = detection_method(image)
+    contours, scores = detection_method(image)
 
     height, width = image.shape[:2]
 
-    for cnt in contours:
+    for cnt, score in zip(contours, scores):
         x, y, w, h = cv.boundingRect(cnt)
 
         if w*h < 500:
@@ -49,9 +49,11 @@ def classify(image_path:str, model_path:str, detection_method:object):
         if label == 1:
             cv.rectangle(original, (x, y), (x+w, y+h), (0, 255, 0), 1)
             # cv.putText(original, 'handwritten', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+            cv.putText(original, str(round(score, 2)), (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
         else:
             cv.rectangle(original, (x, y), (x+w, y+h), (0, 0, 255), 1)
             # cv.putText(original, 'printed', (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            cv.putText(original, str(round(score, 2)), (x, y-10), cv.FONT_HERSHEY_SIMPLEX, 0.3, (0, 0, 255), 1)
 
     return original
