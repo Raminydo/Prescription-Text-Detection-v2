@@ -22,9 +22,11 @@ def text_detection_pocr(img:object):
     res = model.predict(img_rgb)
 
     dt_polys = res[0]['dt_polys']
+    scores = res[0]['dt_scores'] #
     contours = [np.array(poly, dtype=np.int32) for poly in dt_polys]
 
-    return contours
+
+    return contours, scores
 
 
 
