@@ -28,17 +28,12 @@ from CLASSIFICATION.processing import classify
 st.set_page_config(page_title='Medical Prescription Text Detection App', layout='wide')
 st.markdown("<h1 style='text-align: center; color: lightblue;'>Medical Prescription Text Detection</h1>", unsafe_allow_html=True)
 
-# models
-MODELS = {
-    'Detector 1': text_detection_pocr,
-}
+
+detector_model = text_detection_pocr
 
 # initialize session state
 if 'processed_image' not in st.session_state:
     st.session_state.processed_image = None
-
-if 'radio_disabled' not in st.session_state:
-    st.session_state.radio_disabled = False
 
 if 'elapsed_time' not in st.session_state:
     st.session_state.elapsed_time = 0
@@ -49,14 +44,8 @@ col1, col2 = st.columns(2, gap='medium', border=True)
 
 # region components
 with col1:
-    st.subheader(':blue[Input Settings]', divider='gray')
-        
-    # model selection
-    selected_model = st.selectbox(
-        ':blue[Select detection method]',
-        list(MODELS.keys()),
-        index=0
-    )
+    st.subheader(':blue[Input Setting]', divider='gray')
+
     
     # file uploader
     uploaded_file = st.file_uploader(':blue[Choose an image]', type=['jpg', 'jpeg', 'png'])
@@ -81,11 +70,9 @@ with col1:
             file.write(uploaded_file.getbuffer())
 
 
-
-
         # main process for detection
         start_time = time.time()    
-        detected = classify(file_path, 'boosted_model.pkl', MODELS[selected_model])
+        detected = classify(file_path, 'boosted_model.pkl', detector_model)
         end_time = time.time()
         st.session_state.elapsed_time = end_time - start_time
         st.session_state.processed_image= Image.fromarray(cv.cvtColor(detected, cv.COLOR_BGR2RGB))
@@ -104,7 +91,6 @@ with col2:
         for f in files:
             os.remove(f)
     
-        st.caption(f'Detection method: {selected_model}')
         st.caption(f'Elapsed time for detecting text areas: {round(st.session_state.elapsed_time)} seconds')
 
         st.success('Detection Completed!')
